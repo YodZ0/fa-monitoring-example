@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 
 from src.metrics.router import router as metrics_router
-from src.middlewares import PrometheusMetricsMiddleware
+from src.middlewares import HTTPMetricsMiddleware, InflightRequestsMiddleware
 
 app = FastAPI()
-app.add_middleware(PrometheusMetricsMiddleware)
+
+# The last one added is called first
+app.add_middleware(HTTPMetricsMiddleware)
+app.add_middleware(InflightRequestsMiddleware)
+
 app.include_router(metrics_router)
 
 
