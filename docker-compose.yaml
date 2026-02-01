@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: .
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"
+    networks:
+      - local
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - backend
+    networks:
+      - local
+
+networks:
+  local:

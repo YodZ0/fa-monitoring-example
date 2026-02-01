@@ -1,0 +1,16 @@
+FROM python:3.13-slim
+
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+WORKDIR /app
+
+RUN pip install --upgrade pip wheel "poetry==2.0.0" && \
+    poetry config virtualenvs.create false
+
+COPY poetry.lock pyproject.toml ./
+RUN poetry install --without dev
+
+COPY . ./
+
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
