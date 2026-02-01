@@ -1,8 +1,10 @@
-from prometheus_client import Counter, REGISTRY, Histogram
+from prometheus_client import Counter, REGISTRY, Histogram, Gauge
 
 __all__ = (
     "HTTP_REQUESTS_TOTAL",
     "HTTP_REQUESTS_DURATION_HISTOGRAM",
+    "HTTP_REQUESTS_CURRENT",
+    "HTTP_REQUESTS_MAX",
 )
 
 HTTP_REQUESTS_TOTAL = Counter(
@@ -24,5 +26,17 @@ HTTP_REQUESTS_DURATION_HISTOGRAM = Histogram(
         1,  # 1000 ms
     ],
     labelnames=["endpoint", "method"],
+    registry=REGISTRY,
+)
+
+HTTP_REQUESTS_CURRENT = Gauge(
+    name="http_requests_inflight_current",
+    documentation="Current number of inflight HTTP requests",
+    registry=REGISTRY,
+)
+
+HTTP_REQUESTS_MAX = Gauge(
+    name="http_requests_inflight_max",
+    documentation="Max number of inflight HTTP requests",
     registry=REGISTRY,
 )
