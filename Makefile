@@ -3,3 +3,6 @@ run-build:
 
 dispose:
 	docker compose down
+
+load:
+	python ./load_producer/loader.py
