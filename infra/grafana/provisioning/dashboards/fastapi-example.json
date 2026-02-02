@@ -66,7 +66,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 4,
         "x": 0,
         "y": 0
       },
@@ -134,8 +134,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 6,
+        "w": 4,
+        "x": 4,
         "y": 0
       },
       "id": 3,
@@ -177,6 +177,70 @@
           "color": {
             "mode": "thresholds"
           },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.2",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "sum(rate(http_requests_total{endpoint!~\"/metrics|/favicon.ico|/openapi.json\"}[1m]))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "RPS",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
           "decimals": 1,
           "mappings": [],
           "noValue": "0",
@@ -189,7 +253,7 @@
               },
               {
                 "color": "red",
-                "value": 0.1
+                "value": 0.05
               }
             ]
           },
@@ -366,8 +430,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 11,
+        "w": 24,
         "x": 0,
         "y": 4
       },
@@ -379,7 +443,7 @@
             "max"
           ],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -392,7 +456,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "sum(rate(http_requests_total{endpoint!~\"/metrics|/favicon.ico|/openapi.json\"}[1m])) by (endpoint)",
+          "expr": "sum(rate(http_requests_total{endpoint!~\"/metrics|/favicon.ico|/openapi.json|/docs\"}[1m])) by (endpoint)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -467,10 +531,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 4
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 15
       },
       "id": 4,
       "options": {
@@ -480,7 +544,7 @@
             "max"
           ],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -569,10 +633,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 9,
+        "w": 24,
         "x": 0,
-        "y": 12
+        "y": 26
       },
       "id": 6,
       "options": {
@@ -582,7 +646,7 @@
             "max"
           ],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -595,7 +659,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "histogram_quantile(\r\n  0.99,\r\n  sum(rate(http_requests_duration_seconds_histogram_bucket{endpoint!~\"/metrics|/favicon.ico|/openapi.json\"}[1m])) by (le, endpoint)\r\n)",
+          "expr": "histogram_quantile(\r\n  0.99,\r\n  sum(rate(http_requests_duration_seconds_histogram_bucket{endpoint!~\"/metrics|/favicon.ico|/openapi.json|/docs\"}[1m])) by (le, endpoint)\r\n)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -620,5 +684,5 @@
   "timezone": "browser",
   "title": "FastAPI monitoring example Copy",
   "uid": "adlq6qk",
-  "version": 1
+  "version": 2
 }
