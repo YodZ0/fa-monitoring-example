@@ -14,7 +14,13 @@ async def main() -> None:
         EndpointConfig(url="http://localhost:8000/example/ms-500", weight=10),
         EndpointConfig(url="http://localhost:8000/example/ms-1000", weight=5),
     ]
-    config = LoadConfig(pattern=LoadPattern.CONSTANT)
+    config = LoadConfig(
+        duration_seconds=0.0,
+        pattern=LoadPattern.CONSTANT,
+        base_rps=10.0,
+        random_min_delay_seconds=0.01,
+        random_max_delay_seconds=2.0,
+    )
     producer = HTTPLoadProducer(
         endpoints=endpoints,
         config=config,
