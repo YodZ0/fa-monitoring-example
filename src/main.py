@@ -1,22 +1,6 @@
-from fastapi import FastAPI
+from bootstrap import create_app
 
-from src.example.router import router as example_router
-from src.metrics.router import router as metrics_router
-from src.middlewares import (
-    HTTPMetricsMiddleware,
-    InflightRequestsMiddleware,
-    ProcessTimeMiddleware,
-)
-
-app = FastAPI()
-
-# The last one added is called first
-app.add_middleware(HTTPMetricsMiddleware)
-app.add_middleware(InflightRequestsMiddleware)
-app.add_middleware(ProcessTimeMiddleware)
-
-app.include_router(example_router)
-app.include_router(metrics_router)
+app = create_app(use_instrumentator=False)
 
 
 if __name__ == "__main__":
